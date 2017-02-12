@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
 	function complete() {
 		if (req.uow) {
 			req.uow.complete();
@@ -35,7 +35,7 @@ app.use(function (req, res, next) {
 });
 
 // uow per-request
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
 	UnitOfWork.create(uow => {
 		req.uow = uow;
 		next();
